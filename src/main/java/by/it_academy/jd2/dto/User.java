@@ -67,34 +67,34 @@ public class User {
         this.role = role;
     }
 
-    public static class UserBuilder {
+    public static class Builder {
         private String login;
         private String password;
         private String name;
         private LocalDateTime dateOfBirth;
         private LocalDateTime dateOfCreate = LocalDateTime.now();
         private UserRole role= UserRole.USER;
-        public UserBuilder setLogin(String login) {
+        public Builder setLogin(String login) {
             this.login = login;
             return this;
         }
-        public UserBuilder setPassword(String password) {
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }
-        public UserBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
-        public UserBuilder setDateOfBirth(LocalDateTime dateOfBirth) {
+        public Builder setDateOfBirth(LocalDateTime dateOfBirth) {
             this.dateOfBirth = dateOfBirth;
             return this;
         }
-        public UserBuilder setDateOfCreate(LocalDateTime dateOfCreate) {
+        public Builder setDateOfCreate(LocalDateTime dateOfCreate) {
             this.dateOfCreate = dateOfCreate;
             return this;
         }
-        public UserBuilder setRole(UserRole role) {
+        public Builder setRole(UserRole role) {
             this.role = role;
             return this;
         }

@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet("/login")
+@WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
     private final IUserService userService = new UserService();
 
@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
        if(userService.authoriseUser(login, password)) {
            HttpSession session = req.getSession();
            session.setAttribute("user", login);
-           resp.sendRedirect("/");
+           resp.sendRedirect(req.getContextPath() +"/messages");
        }else resp.sendError(400,"неверное имя пользователя или пароль");
     }
 }

@@ -21,15 +21,20 @@ public class StorageFactory {
     }
 
     private final static UserStorage userStorage;
+    private final static MessageStorage messageStorage;
 
     static {
         userStorage = new UserStorage(dataSource);
+        messageStorage = new MessageStorage(dataSource);
     }
 
     private StorageFactory() {}
 
     public static UserStorage getUserStorage() {
         return userStorage;
+    }
+    public static MessageStorage getMessageStorage() {
+        return messageStorage;
     }
 }
 

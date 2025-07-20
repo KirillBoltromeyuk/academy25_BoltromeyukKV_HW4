@@ -47,12 +47,14 @@ public class UserStorage implements IUserStorage {
             LocalDateTime dateOfBirth = resultSet.getTimestamp("date_of_birds").toLocalDateTime();
             LocalDateTime dateOfCreate = resultSet.getTimestamp("date_of_create").toLocalDateTime();
             UserRole role = UserRole.valueOf(resultSet.getString("role"));
-            User.UserBuilder userBuilder = new User.UserBuilder();
-            userBuilder.setName(name);
-            userBuilder.setDateOfBirth(dateOfBirth);
-            userBuilder.setDateOfCreate(dateOfCreate);
-            userBuilder.setRole(role);
-            return userBuilder.build();
+
+            return new User.Builder()
+                    .setLogin(login)
+                    .setName(name)
+                    .setDateOfBirth(dateOfBirth)
+                    .setDateOfCreate(dateOfCreate)
+                    .setRole(role)
+                    .build();
         }catch (SQLException e) {
             throw new StorageException(e);
         }

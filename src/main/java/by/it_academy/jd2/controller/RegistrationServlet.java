@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 
-@WebServlet("/registration")
+@WebServlet(urlPatterns = "/registration")
 public class RegistrationServlet extends HttpServlet {
     private final IUserService userService = new UserService();
 
@@ -35,7 +35,7 @@ public class RegistrationServlet extends HttpServlet {
         if(day<1 || day>31){
             resp.sendError(400, "Неверный день");
         }
-        userService.registerUser(new User.UserBuilder()
+        userService.registerUser(new User.Builder()
                         .setLogin(req.getParameter("login"))
                         .setPassword(req.getParameter("password"))
                         .setName(req.getParameter("name"))
@@ -43,5 +43,6 @@ public class RegistrationServlet extends HttpServlet {
                         .setDateOfCreate(LocalDateTime.now())
                         .setRole(UserRole.USER)
                         .build());
+        resp.sendRedirect(req.getContextPath() +"/login");
     }
 }
