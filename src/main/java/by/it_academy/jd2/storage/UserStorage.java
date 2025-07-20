@@ -23,7 +23,7 @@ public class UserStorage implements IUserStorage {
                 "VALUES(?,?,?,?,?,?)";
         try (Connection conn = dataSource.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, user.getName());
+            pstmt.setString(1, user.getLogin());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getName());
             pstmt.setTimestamp(4, Timestamp.valueOf(user.getDateOfBirth()));
