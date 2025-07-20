@@ -1,0 +1,35 @@
+package by.it_academy.jd2.storage;
+import by.it_academy.jd2.storage.api.exceptions.StorageException;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import javax.sql.DataSource;
+
+
+public class StorageFactory {
+    private final static DataSource dataSource;
+
+    static {
+        try {
+            ComboPooledDataSource cpds = new ComboPooledDataSource();
+            cpds.setDriverClass( "org.postgresql.Driver" ); //loads the jdbc driver
+            cpds.setJdbcUrl( "jdbc:postgresql://localhost:5432/homework4" );
+            cpds.setUser("postgres");
+            cpds.setPassword("77227722");
+            dataSource = cpds;
+        } catch (Exception e) {
+            throw new StorageException(e.getMessage());
+        }
+    }
+
+    private final static UserStorage userStorage;
+
+    static {
+        userStorage = new UserStorage(dataSource);
+    }
+
+    private StorageFactory() {}
+
+    public static UserStorage getUserStorage() {
+        return userStorage;
+    }
+}
+
