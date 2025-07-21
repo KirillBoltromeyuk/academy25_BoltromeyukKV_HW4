@@ -6,7 +6,7 @@
 
     <groupId>by.it_academy.jd2</groupId>
     <artifactId>JD2HW4</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>war</packaging>
 
     <properties>

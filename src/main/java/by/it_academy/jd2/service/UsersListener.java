@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSessionListener;
  * При создании новой сессии увеличивает счётчик активных пользователей в контексте сервлета.
  * При уничтожении сессии уменьшает значение счётчика.
  * </p>
- * @WebListener Регистрирует класс как слушатель событий жизненного цикла сессий
+ * {@code @WebListener} Регистрирует класс как слушатель событий жизненного цикла сессий
  */
 @WebListener
 public class UsersListener implements HttpSessionListener {

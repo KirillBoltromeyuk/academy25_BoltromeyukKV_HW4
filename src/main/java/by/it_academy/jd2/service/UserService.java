@@ -1,13 +1,21 @@
 package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.dto.User;
-import by.it_academy.jd2.dto.UserRole;
+import by.it_academy.jd2.service.api.IMessageService;
 import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.storage.StorageFactory;
 import by.it_academy.jd2.storage.api.IUserStorage;
 
-import java.time.LocalDateTime;
 
+/**
+ * Сервис для работы с пользователями.
+ * Реализует интерфейс {@link IUserService}.
+ * Осуществляет следующие операции:
+ * Регистрация нового пользователя;
+ * Проверка есть ли в хранилище пользователь с заданными логином и паролем;
+ * Получение пользователя по его логину;
+ * Подсчёт общего количества пользователей.
+ */
 public class UserService implements IUserService {
     private final IUserStorage storage=StorageFactory.getUserStorage();
 

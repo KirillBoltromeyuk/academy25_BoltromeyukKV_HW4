@@ -1,6 +1,7 @@
 package by.it_academy.jd2.storage;
 
 import by.it_academy.jd2.dto.Message;
+import by.it_academy.jd2.service.api.IMessageService;
 import by.it_academy.jd2.storage.api.IMessageStorage;
 import by.it_academy.jd2.storage.api.exceptions.StorageException;
 
@@ -8,7 +9,14 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Сервис для записи и чтения сообщений из базы данных.
+ * Реализует интерфейс {@link IMessageStorage}.
+ * Осуществляет следующие операции:
+ * Создание нового сообщения;
+ * Получение листа сообщений отправленных определённому пользователю;
+ * Получение общего количества сообщений.
+ */
 public class MessageStorage implements IMessageStorage {
 
     private final DataSource dataSource;

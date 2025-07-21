@@ -2,13 +2,21 @@ package by.it_academy.jd2.service;
 
 import by.it_academy.jd2.dto.Message;
 import by.it_academy.jd2.service.api.IMessageService;
+import by.it_academy.jd2.service.api.IStatisticsService;
 import by.it_academy.jd2.storage.StorageFactory;
 import by.it_academy.jd2.storage.api.IMessageStorage;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-
+/**
+ * Сервис для отправки и получения сообщений.
+ * Реализует интерфейс {@link IMessageService}.
+ * Осуществляет следующие операции:
+ * Создание нового сообщения;
+ * Получение листа сообщений отправленных определённому пользователю;
+ * Получение общего количества сообщений.
+ */
 public class MessageService implements IMessageService {
     private final IMessageStorage storage = StorageFactory.getMessageStorage();
 

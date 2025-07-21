@@ -2,6 +2,7 @@ package by.it_academy.jd2.storage;
 
 import by.it_academy.jd2.dto.User;
 import by.it_academy.jd2.dto.UserRole;
+import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.storage.api.IUserStorage;
 import by.it_academy.jd2.storage.api.exceptions.StorageException;
 
@@ -9,7 +10,15 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDateTime;
 
-
+/**
+ * Сервис для работы с записи и чтения пользователей из базы данных.
+ * Реализует интерфейс {@link IUserStorage}.
+ * Осуществляет следующие операции:
+ * Запись в СУБД нового пользователя;
+ * Проверка есть ли в СУБД пользователь с заданными логином и паролем;
+ * Получение пользователя по его логину;
+ * Подсчёт общего количества пользователей.
+ */
 public class UserStorage implements IUserStorage {
     private final DataSource dataSource;
 

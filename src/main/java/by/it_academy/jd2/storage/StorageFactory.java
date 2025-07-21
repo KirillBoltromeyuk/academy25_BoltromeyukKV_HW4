@@ -1,9 +1,15 @@
 package by.it_academy.jd2.storage;
+import by.it_academy.jd2.service.api.IUserService;
 import by.it_academy.jd2.storage.api.exceptions.StorageException;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import javax.sql.DataSource;
 
-
+/**
+ * Сервис для подключения к СУБД.
+ * Осуществляет следующие операции:
+ * Хранит параметры для подключения к СУБД;
+ * Отправляет эти параметры в другие сервисы работающие с СУБД.
+ */
 public class StorageFactory {
     private final static DataSource dataSource;
 
