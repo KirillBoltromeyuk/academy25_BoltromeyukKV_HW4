@@ -25,4 +25,9 @@ public class UserService implements IUserService {
     public User getByLogin(String login) {
         return storage.getUserByLogin(login);
     }
+
+    @Override
+    public int getUsersCount() {
+        return storage.getUsersCount();
+    }
 }

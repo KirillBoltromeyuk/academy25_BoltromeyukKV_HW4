@@ -34,4 +34,9 @@ public class MessageService implements IMessageService {
         });
         return messages;
     }
+
+    @Override
+    public int getMessagesCount() {
+        return storage.getMessagesCount();
+    }
 }

@@ -11,13 +11,13 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
+@WebServlet(urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
     private final IUserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("template/loginForm.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/views/ui/signIn.jsp").forward(req, resp);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
        if(userService.authoriseUser(login, password)) {
            HttpSession session = req.getSession();
            session.setAttribute("user", login);
-           resp.sendRedirect(req.getContextPath() +"/messages");
+           resp.sendRedirect(req.getContextPath() +"/");
        }else resp.sendError(400,"неверное имя пользователя или пароль");
     }
 }

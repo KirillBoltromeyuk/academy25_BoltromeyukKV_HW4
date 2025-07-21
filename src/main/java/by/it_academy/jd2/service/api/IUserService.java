@@ -8,4 +8,5 @@ public interface IUserService {
     void registerUser(User user);
     boolean authoriseUser(String login, String password);
     User getByLogin(String login);
+    int getUsersCount();
 }

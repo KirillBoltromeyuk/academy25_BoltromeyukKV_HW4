@@ -15,7 +15,7 @@
 </head>
 <body>
 <h1>Регистрация пользователя</h1>
-<form action="/JD2HW4-1.0-SNAPSHOT/registration" method="post">
+<form action="/JD2HW4-1.0-SNAPSHOT/user" method="post">
     <table>
         <tr>
             <td>Введите логин</td>

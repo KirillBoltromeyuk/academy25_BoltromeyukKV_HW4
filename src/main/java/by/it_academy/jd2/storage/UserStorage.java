@@ -74,4 +74,20 @@ public class UserStorage implements IUserStorage {
         }
 
     }
+
+    @Override
+    public int getUsersCount() {
+        String sql="SELECT COUNT(*) FROM app.users";
+        int count=0;
+        try(Connection conn= dataSource.getConnection();
+        PreparedStatement prst= conn.prepareStatement(sql)){
+            prst.execute();
+            ResultSet resultSet = prst.getResultSet();
+            resultSet.next();
+            count = resultSet.getInt(1);
+        }catch (SQLException e) {
+            throw new StorageException(e);
+        }
+        return count;
+    }
 }

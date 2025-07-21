@@ -20,12 +20,17 @@
 <table>
     <tr>
         <td>${message.getText()} </td>
-        <td>            от ${message.getAuthor()}; ${message.getTime()}</td>
+        <td>        от ${message.getAuthor()}; ${message.getTime()}</td>
     </tr>
 </table>
 </c:forEach>
-<form action="/JD2HW4-1.0-SNAPSHOT/sendMessage" method="get">
-<button>Написать сообщение</button>
+<h1>Написать сообщение</h1>
+<form action="/JD2HW4-1.0-SNAPSHOT/message" method="post">
+    <p><b>Текст сообщения</b></p>
+    <textarea name="text"></textarea>
+    <p><b>Адресат</b></p>
+    <p><input type="text" name="destination" /></p>
+    <input type="submit" value="Отправить" />
 </form>
 </body>
 </html>

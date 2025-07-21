@@ -53,4 +53,19 @@ public class MessageStorage implements IMessageStorage {
         }
         return messages;
     }
+    @Override
+    public int getMessagesCount() {
+        String sql="SELECT COUNT(*) FROM app.messages";
+        int count=0;
+        try(Connection conn= dataSource.getConnection();
+            PreparedStatement prst= conn.prepareStatement(sql)){
+            prst.execute();
+            ResultSet resultSet = prst.getResultSet();
+            resultSet.next();
+            count = resultSet.getInt(1);
+        }catch (SQLException e) {
+            throw new StorageException(e);
+        }
+        return count;
+    }
 }

@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 
-@WebServlet(urlPatterns = "/registration")
+@WebServlet(urlPatterns = "/api/user")
 public class RegistrationServlet extends HttpServlet {
     private final IUserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("template/registrationForm.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/views/ui/signUp.jsp").forward(req, resp);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class RegistrationServlet extends HttpServlet {
                         .setDateOfCreate(LocalDateTime.now())
                         .setRole(UserRole.USER)
                         .build());
-        resp.sendRedirect(req.getContextPath() +"/login");
+        resp.sendRedirect(req.getContextPath() +"/api/login");
     }
 }

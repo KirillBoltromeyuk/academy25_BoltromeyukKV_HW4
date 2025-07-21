@@ -6,4 +6,5 @@ public interface IUserStorage {
     void addUser(User user);
     User getUserByLogin(String login);
     boolean UserExists(String login, String password);
+    int getUsersCount();
 }
