@@ -1,5 +1,6 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.core.ContextFactory;
 import by.it_academy.jd2.service.MessageService;
 import by.it_academy.jd2.service.UserService;
 import by.it_academy.jd2.service.api.IMessageService;
@@ -15,8 +16,8 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/api/chats")
 public class ChatsServlet extends HttpServlet {
-    private final IMessageService messageService = new MessageService();
-    private final IUserService userService = new UserService();
+    private final IMessageService messageService = ContextFactory.getBean(MessageService.class);
+    private final IUserService userService = ContextFactory.getBean(UserService.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();

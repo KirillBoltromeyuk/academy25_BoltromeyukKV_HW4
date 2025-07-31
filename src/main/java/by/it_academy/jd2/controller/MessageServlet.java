@@ -1,10 +1,10 @@
 package by.it_academy.jd2.controller;
 
-import by.it_academy.jd2.dto.Message;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.core.dto.Message;
 import by.it_academy.jd2.service.MessageService;
-import by.it_academy.jd2.service.UserService;
 import by.it_academy.jd2.service.api.IMessageService;
-import by.it_academy.jd2.service.api.IUserService;
+import by.it_academy.jd2.service.api.exceptions.ValidatorException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 
 @WebServlet(urlPatterns = "/api/message")
 public class MessageServlet extends HttpServlet {
-    private final IMessageService messageService = new MessageService();
+    private final IMessageService messageService = ContextFactory.getBean(MessageService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,17 +28,17 @@ public class MessageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String author = (String) session.getAttribute("user");
-        String text = req.getParameter("text");
-        String destination = req.getParameter("destination");
-        if (text == null || destination == null) {
-            resp.sendError(400, "Нет текста или не указан адресат");
+        try{
+            messageService.add(new Message.Builder()
+                    .setTime(LocalDateTime.now())
+                    .setAuthor(author)
+                    .setDestination(req.getParameter("destination"))
+                    .setText(req.getParameter("text"))
+                    .build());
+        }catch (ValidatorException e){
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/jsp/views/ui/user/message.jsp").forward(req, resp);
         }
-        messageService.sendMessage(new Message.Builder()
-                .setTime(LocalDateTime.now())
-                .setAuthor(author)
-                .setDestination(req.getParameter("destination"))
-                .setText(req.getParameter("text"))
-                .build());
         resp.sendRedirect(req.getContextPath() + "/");
     }
 

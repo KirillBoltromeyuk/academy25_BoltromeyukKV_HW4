@@ -15,6 +15,7 @@
 </head>
 <body>
 <h1>Написать сообщение</h1>
+<p style="color:red">${error}</p>
 <form action="${pageContext.request.contextPath}/api/message" method="post">
     <p><b>Текст сообщения</b></p>
     <textarea name="text"></textarea>

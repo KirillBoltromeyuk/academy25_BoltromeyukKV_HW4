@@ -1,7 +1,8 @@
 package by.it_academy.jd2.controller;
 
-import by.it_academy.jd2.service.UserService;
-import by.it_academy.jd2.service.api.IUserService;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.service.AuthorisationService;
+import by.it_academy.jd2.service.api.IAuthorisationService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
-    private final IUserService userService = new UserService();
+    private final IAuthorisationService authorisationService = ContextFactory.getBean(AuthorisationService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,12 +26,16 @@ public class LoginServlet extends HttpServlet {
        String login = req.getParameter("login");
        String password = req.getParameter("password");
        if (login == null || password == null ) {
-           resp.sendError(400, "логин и пароль не должны быть пустыми");
+           req.setAttribute("error", "логин и пароль не должны быть пустыми");
+           req.getRequestDispatcher("/WEB-INF/jsp/views/ui/signIn.jsp").forward(req, resp);
        }
-       if(userService.authoriseUser(login, password)) {
+       if(authorisationService.authoriseUser(login, password)) {
            HttpSession session = req.getSession();
            session.setAttribute("user", login);
            resp.sendRedirect(req.getContextPath() +"/");
-       }else resp.sendError(400,"неверное имя пользователя или пароль");
+       }else {
+           req.setAttribute("error", "неверное имя пользователя или пароль");
+           req.getRequestDispatcher("/WEB-INF/jsp/views/ui/signIn.jsp").forward(req, resp);
+       }
     }
 }

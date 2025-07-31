@@ -1,6 +1,7 @@
 package by.it_academy.jd2.service;
 
 
+
 import by.it_academy.jd2.service.api.IMessageService;
 import by.it_academy.jd2.service.api.IStatisticsService;
 import by.it_academy.jd2.service.api.IUserService;
@@ -13,13 +14,18 @@ import java.util.Map;
  * Предоставляет данные о количестве зарегистрированных пользователей, сообщений и активных сессий.
  */
 public class StatisticsService implements IStatisticsService {
-    private final IUserService userService=new UserService();
-    private final IMessageService messageService=new MessageService();
+    private final IUserService userService;
+    private final IMessageService messageService;
+
+    public StatisticsService(IUserService userService, IMessageService messageService) {
+        this.userService = userService;
+        this.messageService = messageService;
+    }
 
     @Override
     public Map<String, Integer> getStatistics(ServletContext context) {
-        int usersCount = userService.getUsersCount();
-        int messagesCount = messageService.getMessagesCount();
+        int usersCount = userService.getCount();
+        int messagesCount = messageService.getCount();
         int activeUsersCount = (int) context.getAttribute("activeUsersCount");
 
         return Map.of(

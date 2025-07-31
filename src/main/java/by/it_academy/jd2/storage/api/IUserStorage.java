@@ -1,10 +1,10 @@
 package by.it_academy.jd2.storage.api;
 
-import by.it_academy.jd2.dto.User;
+import by.it_academy.jd2.core.dto.User;
 
 public interface IUserStorage {
-    void addUser(User user);
-    User getUserByLogin(String login);
-    boolean UserExists(String login, String password);
-    int getUsersCount();
+    void add(User user);
+    User getByLogin(String login);
+    boolean existsByLoginAndPass(String login, String password);
+    int getCount();
 }

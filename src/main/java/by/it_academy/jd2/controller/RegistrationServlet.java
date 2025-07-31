@@ -1,8 +1,11 @@
 package by.it_academy.jd2.controller;
-import by.it_academy.jd2.dto.User;
-import by.it_academy.jd2.dto.UserRole;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.core.dto.User;
+import by.it_academy.jd2.core.dto.UserReg;
+import by.it_academy.jd2.core.dto.UserRole;
 import by.it_academy.jd2.service.UserService;
 import by.it_academy.jd2.service.api.IUserService;
+import by.it_academy.jd2.service.api.exceptions.ValidatorException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +17,7 @@ import java.time.LocalDateTime;
 
 @WebServlet(urlPatterns = "/api/user")
 public class RegistrationServlet extends HttpServlet {
-    private final IUserService userService = new UserService();
+    private final IUserService userService = ContextFactory.getBean(UserService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,26 +26,20 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int year = Integer.parseInt(req.getParameter("year"));
-        int month = Integer.parseInt(req.getParameter("month"));
-        int day = Integer.parseInt(req.getParameter("day"));
-        if(year<1900 && year >LocalDateTime.now().getYear()){
-            resp.sendError(400,"Неверный год");
+        try{
+            userService.add(new UserReg.Builder()
+                    .setLogin(req.getParameter("login").toLowerCase())
+                    .setPassword(req.getParameter("password"))
+                    .setName(req.getParameter("name"))
+                    .setYear(req.getParameter("year"))
+                    .setMonth(req.getParameter("month"))
+                    .setDay(req.getParameter("day"))
+                    .build());
+        }catch (ValidatorException e){
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/jsp/views/ui/signUp.jsp").forward(req, resp);
         }
-        if(month<1 || month>12){
-            resp.sendError(400, "Неверный месяц");
-        }
-        if(day<1 || day>31){
-            resp.sendError(400, "Неверный день");
-        }
-        userService.registerUser(new User.Builder()
-                        .setLogin(req.getParameter("login"))
-                        .setPassword(req.getParameter("password"))
-                        .setName(req.getParameter("name"))
-                        .setDateOfBirth(LocalDateTime.of(year, month,day,0,0,0))
-                        .setDateOfCreate(LocalDateTime.now())
-                        .setRole(UserRole.USER)
-                        .build());
+
         resp.sendRedirect(req.getContextPath() +"/api/login");
     }
 }

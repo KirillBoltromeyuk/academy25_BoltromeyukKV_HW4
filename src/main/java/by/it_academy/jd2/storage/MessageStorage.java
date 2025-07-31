@@ -1,7 +1,7 @@
 package by.it_academy.jd2.storage;
 
-import by.it_academy.jd2.dto.Message;
-import by.it_academy.jd2.service.api.IMessageService;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.core.dto.Message;
 import by.it_academy.jd2.storage.api.IMessageStorage;
 import by.it_academy.jd2.storage.api.exceptions.StorageException;
 
@@ -24,6 +24,7 @@ public class MessageStorage implements IMessageStorage {
     public MessageStorage(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
     @Override
     public void add(Message message) {
         String sql = "INSERT into app.messages (create_date, author, destination, text) " +
@@ -62,7 +63,7 @@ public class MessageStorage implements IMessageStorage {
         return messages;
     }
     @Override
-    public int getMessagesCount() {
+    public int getCount() {
         String sql="SELECT COUNT(*) FROM app.messages";
         int count=0;
         try(Connection conn= dataSource.getConnection();

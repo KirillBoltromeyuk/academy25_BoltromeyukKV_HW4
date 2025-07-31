@@ -1,12 +1,11 @@
 package by.it_academy.jd2.service.api;
 
-import by.it_academy.jd2.dto.User;
-
-import java.time.LocalDateTime;
+import by.it_academy.jd2.core.dto.User;
+import by.it_academy.jd2.core.dto.UserReg;
+import by.it_academy.jd2.service.api.exceptions.ValidatorException;
 
 public interface IUserService {
-    void registerUser(User user);
-    boolean authoriseUser(String login, String password);
+    void add(UserReg user) throws ValidatorException;
     User getByLogin(String login);
-    int getUsersCount();
+    int getCount();
 }

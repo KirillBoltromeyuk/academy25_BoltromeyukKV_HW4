@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="org.postgresql.Driver"/>
+        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/homework4"/>
+        <property name="user" value="postgres"/>
+        <property name="password" value="77227722"/>
+    </bean>
+
+
+    <bean id="userStorage" class="by.it_academy.jd2.storage.UserStorage">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="messageStorage" class="by.it_academy.jd2.storage.MessageStorage">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="userValidator" class="by.it_academy.jd2.service.UserValidator">
+        <constructor-arg name="userStorage" ref="userStorage"/>
+    </bean>
+    <bean id="messageValidator" class="by.it_academy.jd2.service.MessageValidator">
+        <constructor-arg name="userStorage" ref="userStorage"/>
+    </bean>
+
+    <bean id="userService" class="by.it_academy.jd2.service.UserService">
+        <constructor-arg name="storage" ref="userStorage"/>
+        <constructor-arg name="validator" ref="userValidator"/>
+    </bean>
+    <bean id="messageService" class="by.it_academy.jd2.service.MessageService">
+        <constructor-arg name="storage" ref="messageStorage"/>
+        <constructor-arg name="validator" ref="messageValidator"/>
+    </bean>
+
+    <bean id="statisticsService" class="by.it_academy.jd2.service.StatisticsService">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="messageService" ref="messageService"/>
+    </bean>
+
+    <bean id="authorisationService" class="by.it_academy.jd2.service.AuthorisationService">
+        <constructor-arg name="storage" ref="userStorage"/>
+    </bean>
+
+
+
+</beans>

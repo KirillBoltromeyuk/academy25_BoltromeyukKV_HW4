@@ -16,6 +16,7 @@
 <body>
 <h1>Регистрация пользователя</h1>
 <form action="${pageContext.request.contextPath}/api/user" method="post">
+  <p style="color:red">${error}</p>
   <table>
     <tr>
       <td>Введите логин</td>

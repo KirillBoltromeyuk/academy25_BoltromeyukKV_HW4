@@ -1,9 +1,9 @@
 package by.it_academy.jd2.service;
 
-import by.it_academy.jd2.dto.Message;
+import by.it_academy.jd2.core.dto.Message;
 import by.it_academy.jd2.service.api.IMessageService;
-import by.it_academy.jd2.service.api.IStatisticsService;
-import by.it_academy.jd2.storage.StorageFactory;
+import by.it_academy.jd2.service.api.IMessageValidator;
+import by.it_academy.jd2.service.api.exceptions.ValidatorException;
 import by.it_academy.jd2.storage.api.IMessageStorage;
 
 import java.time.LocalDateTime;
@@ -18,10 +18,17 @@ import java.util.List;
  * Получение общего количества сообщений.
  */
 public class MessageService implements IMessageService {
-    private final IMessageStorage storage = StorageFactory.getMessageStorage();
+    private final IMessageStorage storage;
+    private final IMessageValidator validator;
+
+    public MessageService(IMessageStorage storage, IMessageValidator validator) {
+        this.storage = storage;
+        this.validator = validator;
+    }
 
     @Override
-    public void sendMessage(Message message) {
+    public void add(Message message) throws ValidatorException {
+        if(validator!=null) if(!validator.validate(message)) return;
         storage.add(message);
     }
 
@@ -44,7 +51,7 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public int getMessagesCount() {
-        return storage.getMessagesCount();
+    public int getCount() {
+        return storage.getCount();
     }
 }

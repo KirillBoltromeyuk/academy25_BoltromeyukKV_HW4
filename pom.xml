@@ -6,7 +6,7 @@
 
     <groupId>by.it_academy.jd2</groupId>
     <artifactId>JD2HW4</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <packaging>war</packaging>
 
     <properties>
@@ -49,6 +49,12 @@
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.11.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.2.9</version>
         </dependency>
     </dependencies>
 

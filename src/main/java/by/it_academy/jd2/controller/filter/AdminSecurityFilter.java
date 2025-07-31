@@ -1,8 +1,9 @@
 package by.it_academy.jd2.controller.filter;
 
 
-import by.it_academy.jd2.dto.User;
-import by.it_academy.jd2.dto.UserRole;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.core.dto.User;
+import by.it_academy.jd2.core.dto.UserRole;
 import by.it_academy.jd2.service.UserService;
 import by.it_academy.jd2.service.api.IUserService;
 import jakarta.servlet.*;
@@ -15,7 +16,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/ui/admin/*", "/api/admin/*"})
 public class AdminSecurityFilter implements Filter {
-    private final IUserService userService = new UserService();
+    private final IUserService userService = ContextFactory.getBean(UserService.class);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

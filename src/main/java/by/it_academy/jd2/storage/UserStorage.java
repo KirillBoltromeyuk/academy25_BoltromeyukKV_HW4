@@ -1,8 +1,8 @@
 package by.it_academy.jd2.storage;
 
-import by.it_academy.jd2.dto.User;
-import by.it_academy.jd2.dto.UserRole;
-import by.it_academy.jd2.service.api.IUserService;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.core.dto.User;
+import by.it_academy.jd2.core.dto.UserRole;
 import by.it_academy.jd2.storage.api.IUserStorage;
 import by.it_academy.jd2.storage.api.exceptions.StorageException;
 
@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
  * Подсчёт общего количества пользователей.
  */
 public class UserStorage implements IUserStorage {
+
     private final DataSource dataSource;
 
     public UserStorage(DataSource dataSource) {
@@ -27,7 +28,7 @@ public class UserStorage implements IUserStorage {
     }
 
     @Override
-    public void addUser(User user) {
+    public void add(User user) {
         String sql = "INSERT into app.users (login, password, name, date_of_birds, date_of_create, role) " +
                 "VALUES(?,?,?,?,?,?)";
         try (Connection conn = dataSource.getConnection();
@@ -45,7 +46,7 @@ public class UserStorage implements IUserStorage {
     }
 
     @Override
-    public User getUserByLogin(String login) {
+    public User getByLogin(String login) {
         String sql = "SELECT  name, date_of_birds, date_of_create, role FROM app.users WHERE login = ?";
         try(Connection conn= dataSource.getConnection();
         PreparedStatement preparedStatement = conn.prepareStatement(sql)){
@@ -70,7 +71,7 @@ public class UserStorage implements IUserStorage {
     }
 
     @Override
-    public boolean UserExists(String login, String password) {
+    public boolean existsByLoginAndPass(String login, String password) {
         String sql = "SELECT * FROM app.users WHERE login = ? AND password = ?";
         try(Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -85,7 +86,7 @@ public class UserStorage implements IUserStorage {
     }
 
     @Override
-    public int getUsersCount() {
+    public int getCount() {
         String sql="SELECT COUNT(*) FROM app.users";
         int count=0;
         try(Connection conn= dataSource.getConnection();

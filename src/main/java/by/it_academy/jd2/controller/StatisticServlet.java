@@ -1,5 +1,6 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.core.ContextFactory;
 import by.it_academy.jd2.service.StatisticsService;
 import by.it_academy.jd2.service.api.IStatisticsService;
 import jakarta.servlet.ServletException;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = "/api/admin/statistics")
 public class StatisticServlet extends HttpServlet {
-    private final IStatisticsService statisticsService= new StatisticsService();
+    private final IStatisticsService statisticsService= ContextFactory.getBean(StatisticsService.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String,Integer> statistic = statisticsService.getStatistics(req.getServletContext());

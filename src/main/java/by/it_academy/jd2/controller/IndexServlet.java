@@ -1,6 +1,7 @@
 package by.it_academy.jd2.controller;
 
-import by.it_academy.jd2.dto.User;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.core.dto.User;
 import by.it_academy.jd2.service.UserService;
 import by.it_academy.jd2.service.api.IUserService;
 import jakarta.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/")
 public class IndexServlet extends HttpServlet {
-    private final IUserService userService=new UserService();
+    private final IUserService userService= ContextFactory.getBean(UserService.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
